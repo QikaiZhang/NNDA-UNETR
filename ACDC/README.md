@@ -37,26 +37,22 @@ pip install -e .
 
 ## Training
 #### 1. Dataset download
-Datasets can be acquired via following links:
+Dataset can be acquired via following links:
 
 **Dataset I**
 [ACDC](https://www.creatis.insa-lyon.fr/Challenge/acdc/)
 
-**Dataset II**
-[The Synapse multi-organ CT dataset](https://www.synapse.org/#!Synapse:syn3193805/wiki/217789)
-
-
 The split of ACDC dataset is available in ``ACDC/NNDA/dataset_json/``.
 
 #### 2. Setting up the datasets
-After you have downloaded the datasets, you can follow the settings in [nnUNet](https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/dataset_conversion.md) for path configurations and preprocessing procedures. Finally, your folders should be organized as follows:
+After you have downloaded the datasets, you can follow the settings in [nnUNet](https://github.com/MIC-DKFZ/nnUNet) for path configurations and preprocessing procedures. Finally, your folders should be organized as follows:
 
 ```
 ./NNDA/
 ./DATASET/
   ├── nnFormer_raw/
       ├── nnFormer_raw_data/
-          ├── Task01_ACDC/
+          ├── Task001_ACDC/
               ├── imagesTr/
               ├── imagesTs/
               ├── labelsTr/
@@ -72,9 +68,7 @@ After that, you can preprocess the above data using following commands:
 ```
 nnFormer_convert_decathlon_task -i ../DATASET/nnFormer_raw/nnFormer_raw_data/Task001_ACDC
 
-
 nnFormer_plan_and_preprocess -t 1 --verify_dataset_integrity
-
 ```
 
 #### 3. Training and Testing
@@ -85,7 +79,7 @@ nnFormer_train 3d_fullres nnFormerTrainerV2_nnformer_acdc  1  0
 ```
 If you want use your own data, please create a new trainer file in the path ```ACDC/NNDA/training/network_training``` and make sure the class name in the trainer file is the same as the trainer file. Some hyperparameters could be adjust in the trainer file, but the batch size and crop size should be adjust in the file```ACDC/NNDA/run/default_configuration.py```.
  
-- You can download our pretrained model weights via this [link](https://drive.google.com/drive/folders/1yvqlkeRq1qr5RxH-EzFyZEFsJsGFEc78?usp=sharing). Then, you can put model weights and their associated files in corresponding directories. For instance, on ACDC dataset, they should be like this:
+- Then, you can put model weights and their associated files in corresponding directories. For instance, on ACDC dataset, they should be like this:
 - We have placed the pretrained model weights in the following path.
 
 ```
@@ -102,5 +96,6 @@ python inference_acdc.py 0
 
 #### 4. Visualization Results
 
-You can download the visualization results of nnFormer, UNETR++ and NNDA-UNETR from this [link](https://drive.google.com/file/d/1Lb4rIkwIpuJS3tomBiKl7FBtNF2dv_6M/view?usp=sharing).
+We aim to visually compare the capability of NNDA-UNETR, UNETR++, and nnFormer in the context of ACDC for Automatic Cardiac Diagnosis. Along with showcasing segmentation results, we will provide ground truth masks for an improved comparative analysis.
+![ACDC SOTA comparison](assert/acdc.png)
 
